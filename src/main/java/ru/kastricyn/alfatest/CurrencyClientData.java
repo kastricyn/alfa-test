@@ -6,7 +6,7 @@ import org.springframework.cloud.openfeign.SpringQueryMap;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @FeignClient(name = "currency", url = "https://openexchangerates.org/api/")
-public interface CurrencyClient {
+public interface CurrencyClientData {
 
   @GetMapping("time-series.json")
   ResponseParameters compare(@SpringQueryMap RequireParameters parameters);
