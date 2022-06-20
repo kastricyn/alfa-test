@@ -53,8 +53,8 @@ public class CompareCurrencyServiceImpl implements CompareCurrencyService {
   // todo: tests
   @Override
   public TagsForGIF getTagForGIF(PairForCompare pairForCompare) {
-    return pairForCompare.yesterday() > pairForCompare.today()
+    return pairForCompare.yesterday() < pairForCompare.today()
         ? TagsForGIF.BROKE
-        : pairForCompare.yesterday() < pairForCompare.today() ? TagsForGIF.RICH : TagsForGIF.INTACT;
+        : pairForCompare.yesterday() > pairForCompare.today() ? TagsForGIF.RICH : TagsForGIF.INTACT;
   }
 }
