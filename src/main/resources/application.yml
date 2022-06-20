@@ -1,0 +1,12 @@
+feign:
+  currency-client:
+    url: https://openexchangerates.org/api/
+    app-id: 81b302c50115417a9197baaf92fa96d7
+    base-currency: USD
+  gif-client:
+    url:
+    api-key: W3op8AwI7HBVLM2VRB8iSHlfFIoM2hGQ
+
+server:
+  port: 7717
+
