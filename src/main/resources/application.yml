@@ -4,7 +4,7 @@ feign:
     app-id: 81b302c50115417a9197baaf92fa96d7
     base-currency: USD
   gif-client:
-    url:
+    url: https://api.giphy.com/v1/gifs/
     api-key: W3op8AwI7HBVLM2VRB8iSHlfFIoM2hGQ
 
 server:

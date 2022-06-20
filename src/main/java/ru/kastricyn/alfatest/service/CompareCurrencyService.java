@@ -8,5 +8,4 @@ public interface CompareCurrencyService {
   PairForCompare getPairValuesForCompare(@NonNull String symbols);
 
   TagsForGIF getTagForGIF(PairForCompare pairForCompare);
-
 }

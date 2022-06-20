@@ -10,6 +10,7 @@ import ru.kastricyn.alfatest.model.TagsForGIF;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 @Service
 public class CompareCurrencyServiceImpl implements CompareCurrencyService {
@@ -21,7 +22,7 @@ public class CompareCurrencyServiceImpl implements CompareCurrencyService {
   private final ExchangeRatesClient client;
 
   @Value("${feign.currency-client.app-id}")
-  private String app_id;
+  private String appId;
 
   @Value("${feign.currency-client.base-currency}")
   private String baseCurrency;
@@ -33,12 +34,15 @@ public class CompareCurrencyServiceImpl implements CompareCurrencyService {
 
   @Override
   public PairForCompare getPairValuesForCompare(@NonNull String symbols) {
-    var queryVars = new ExchangeRatesClient.QueryParams(app_id, baseCurrency, symbols);
-    var todayValues = client.getLatestExchangeRate(queryVars);
+    var queryVars = new ExchangeRatesClient.QueryParams(appId, baseCurrency, symbols);
+    // todo: if response_code!=200
+    var todayValues = Objects.requireNonNull(client.getLatestExchangeRate(queryVars).getBody());
 
     var yesterdayDate =
         LocalDate.now().minusDays(1).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-    var yesterdayValues = client.getExchangeRateByDate(yesterdayDate, queryVars);
+    // todo: if response_code!=200
+    var yesterdayValues =
+        Objects.requireNonNull(client.getExchangeRateByDate(yesterdayDate, queryVars).getBody());
 
     String symbol = symbols.toUpperCase().split(",", 2)[0];
     // todo: check if symbols incorrect
@@ -46,7 +50,7 @@ public class CompareCurrencyServiceImpl implements CompareCurrencyService {
     return new PairForCompare(yesterdayValues.rates().get(symbol), todayValues.rates().get(symbol));
   }
 
-  //todo: tests
+  // todo: tests
   @Override
   public TagsForGIF getTagForGIF(PairForCompare pairForCompare) {
     return pairForCompare.yesterday() > pairForCompare.today()
